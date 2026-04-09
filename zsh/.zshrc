@@ -72,7 +72,10 @@ precmd() { vcs_info }
 zstyle ':vcs_info:git:*' formats ' %F{yellow}(%b)%f'
 zstyle ':vcs_info:git:*' actionformats ' %F{red}(%b|%a)%f'
 setopt PROMPT_SUBST
-PROMPT='%F{green}${CONDA_DEFAULT_ENV:+[%B%F{cyan}$CONDA_DEFAULT_ENV%f%b] }%f%F{blue}%~%f${vcs_info_msg_0_} %F{%(?.green.red)}%#%f '
+_conda_prompt() {
+    [[ -n "$CONDA_DEFAULT_ENV" ]] && print -n "[%B%F{cyan}${CONDA_DEFAULT_ENV}%f%b] "
+}
+PROMPT='$(_conda_prompt)%F{blue}%~%f${vcs_info_msg_0_} %F{%(?.green.red)}%#%f '
 
 # ── 9. 插件 ─────────────────────────────────
 if [[ -f ~/.zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh ]]; then
